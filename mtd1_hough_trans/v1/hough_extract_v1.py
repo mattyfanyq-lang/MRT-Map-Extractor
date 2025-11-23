@@ -5,62 +5,35 @@ import json
 IMAGE_FILE = "mrt_clean.png"
 
 # ----------------------------
-# MRT Line HSV Ranges (tuned)
+# Downtown Line HSV Range (Blue)
 # ----------------------------
-
-COLOUR_RANGES = {
-    "east_west_line": {  # Green
-        "lower": (45, 50, 50),
-        "upper": (85, 255, 255)
-    },
-    "north_south_line": {  # Red
-        "lower1": (0, 50, 50),
-        "upper1": (10, 255, 255),
-        "lower2": (170, 50, 50),
-        "upper2": (180, 255, 255)
-    },
-    "circle_line": {  # Yellow / Orange
-        "lower": (20, 80, 80),
-        "upper": (35, 255, 255)
-    },
-    "downtown_line": {  # Blue
-        "lower": (95, 70, 70),
-        "upper": (130, 255, 255)
-    },
-    "north_east_line": {  # Purple
-        "lower": (135, 40, 40),
-        "upper": (155, 255, 255)
-    },
-    "thomson_line": {  # Brown
-        "lower": (5, 90, 90),
-        "upper": (20, 200, 200)
-    }
+DOWNTOWN_LINE_RANGE = {
+    "lower": (95, 70, 70),
+    "upper": (130, 255, 255)
 }
 
 # ----------------------------
 
-def save_segments(name, img, segments):
+def save_segments(img, segments):
     h, w = img.shape[:2]
 
     output = {
-        "line": name,
+        "line": "downtown_line",
         "image_size": {"width": w, "height": h},
         "segments": segments
     }
 
-    fname = f"{name}.json"
-    with open(fname, "w") as f:
+    with open("dtl_v1.json", "w") as f:
         json.dump(output, f, indent=4)
 
-    print(f"Saved {fname} with {len(segments)} segments.")
+    print(f"Saved downtown_line.json with {len(segments)} segments.")
 
 
-def detect_lines(mask, img):
+def detect_lines(mask):
     kernel = np.ones((3, 3), np.uint8)
     cleaned = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
     cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_OPEN, kernel)
 
-    # Hough transform
     lines = cv2.HoughLinesP(
         cleaned,
         rho=1,
@@ -81,27 +54,23 @@ def detect_lines(mask, img):
     return segments
 
 
-def extract_all():
+def extract_downtown_line():
     img = cv2.imread(IMAGE_FILE)
     if img is None:
         raise FileNotFoundError("Image not found at " + IMAGE_FILE)
 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    for name, ranges in COLOUR_RANGES.items():
-        print(f"\nExtracting {name}...")
-        
-        if name == "north_south_line":
-            mask1 = cv2.inRange(hsv, ranges["lower1"], ranges["upper1"])
-            mask2 = cv2.inRange(hsv, ranges["lower2"], ranges["upper2"])
-            mask = mask1 | mask2
-        else:
-            mask = cv2.inRange(hsv, ranges["lower"], ranges["upper"])
+    mask = cv2.inRange(
+        hsv,
+        DOWNTOWN_LINE_RANGE["lower"],
+        DOWNTOWN_LINE_RANGE["upper"]
+    )
 
-        segments = detect_lines(mask, img)
+    segments = detect_lines(mask)
 
-        save_segments(name, img, segments)
+    save_segments(img, segments)
 
 
 if __name__ == "__main__":
-    extract_all()
+    extract_downtown_line()
