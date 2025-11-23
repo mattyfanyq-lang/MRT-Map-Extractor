@@ -39,7 +39,7 @@ Higher Hough thresholds and longer minimum line length used, so shorter fragment
 
 ### Original MRT Schematic
 <div align="center">
-  <img src="mrt_clean.png" alt="Original MRT Map" width="500"/>
+  <img src="mrt_clean.png" alt="Original MRT Map" width="750"/>
 </div>
 
 ---
@@ -49,7 +49,7 @@ Higher Hough thresholds and longer minimum line length used, so shorter fragment
 
 | DTL — Version 1 | DTL — Version 2 |
 |-----------------|-----------------|
-| <img src="dtl_v1.png" alt="DTL Version 1" width="350"/> | <img src="dtl_v2.png" alt="DTL Version 2" width="350"/> |
+| <img src="dtl_v1.png" alt="DTL Version 1" width="500"/> | <img src="dtl_v2.png" alt="DTL Version 2" width="500"/> |
 
 </div>
 
@@ -57,6 +57,6 @@ Higher Hough thresholds and longer minimum line length used, so shorter fragment
 
 ### Overlay for DTL - Version 1
 <div align="center">
-  <img src="dtl_overlay_v1.png" alt="DTL Overlay on Original Map" width="500"/>
+  <img src="dtl_overlay_v1.png" alt="DTL Overlay on Original Map" width="750"/>
 </div>
 
