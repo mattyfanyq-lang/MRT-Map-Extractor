@@ -6,7 +6,6 @@
 - Works on the raw HSV colour mask
 - Uses morphological closing and opening to smooth regions
 - Lower Hough thresholds and shorter minimum line length
-- Designed for extracting multiple MRT lines in one pass
 
 **Visual result**
 
@@ -22,7 +21,6 @@
 - Uses Canny edge detection before Hough
 - No morphological smoothing, preserving thin boundaries
 - Higher Hough threshold and longer minimum line length
-- Tuned specifically for the Downtown Line
 
 **Visual result**
 
