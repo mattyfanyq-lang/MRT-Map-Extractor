@@ -2,8 +2,8 @@ import json
 import cv2
 import numpy as np
 
-JSON_FILE = "downtown_line.json"
-OUTPUT_IMAGE = "downtown_line_only.png"
+JSON_FILE = "dtl_v1.json"
+OUTPUT_IMAGE = "dtl_v1.png"
 
 def main():
     with open(JSON_FILE, "r") as f:

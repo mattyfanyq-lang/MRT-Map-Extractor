@@ -1,18 +1,3 @@
-# MRT Line Extraction Project
-
-This project experiments with converting schematic MRT System Map into structured line data for use in an interactive web visualisation.  
-The final goal is to extract polylines representing train routes, store their coordinates in JSON, and render them in the browser.
-
----
-
-## ✅ Purpose
-
-- Convert static MRT diagrams into machine-readable geometry.
-- Prepare data for browser-based mapping with MapLibre.
-- Allow future logic implementation
-
----
-
 ## 🧠 Approach
 
 1. **Pre-processing**
