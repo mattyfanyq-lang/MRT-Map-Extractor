@@ -4,15 +4,10 @@ import json
 
 IMAGE_FILE = "mrt_clean.png"
 
-# ----------------------------
-# Downtown Line HSV Range (Blue)
-# ----------------------------
 DOWNTOWN_LINE_RANGE = {
     "lower": (95, 70, 70),
     "upper": (130, 255, 255)
 }
-
-# ----------------------------
 
 def save_segments(img, segments):
     h, w = img.shape[:2]
