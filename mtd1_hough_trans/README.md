@@ -3,10 +3,12 @@
 ### Version 1 — Mask based extraction
 
 **Key characteristics**
-- Works on the raw HSV colour mask
-- Uses morphological closing and opening to smooth regions
-- Lower Hough thresholds and shorter minimum line length
-- Designed for extracting multiple MRT lines in one pass
+
+Version 1 takes the raw colour mask and applies morphological closing and opening. 
+This expands the blue Downtown Line, fills tiny gaps, and reconnects broken parts. 
+The line becomes thicker in pixel terms, so the Hough transform receives a large, continuous region of blue pixels. 
+As a result, it detects many similar line segments stacked on top of one another, which makes the output look clustered and visually busy.
+Lower Hough thresholds and shorter minimum line lengths are used, which encourages extra detections.
 
 **Visual result**
 
@@ -19,10 +21,12 @@
 ### Version 2 — Edge based extraction
 
 **Key characteristics**
-- Uses Canny edge detection before Hough
-- No morphological smoothing, preserving thin boundaries
-- Higher Hough threshold and longer minimum line length
-- Tuned specifically for the Downtown Line
+
+Version 2 runs Canny edge detection instead. 
+Canny extracts the thin outline of the Downtown Line, essentially reducing it to a one-pixel path. 
+There is no morphological smoothing here, so the structure remains narrow. 
+When the Hough transform sees this thinner edge map, it produces fewer but clearer line segments. That gives a much cleaner, more discrete-looking Downtown Line.
+Higher Hough thresholds and longer minimum line length used, so shorter fragments get filtered out, strengthening precision.
 
 **Visual result**
 
@@ -35,7 +39,7 @@
 
 ### Original MRT Schematic
 <div align="center">
-  <img src="mrt_clean.png" alt="Original MRT Map" width="500"/>
+  <img src="mrt_clean.png" alt="Original MRT Map" width="750"/>
 </div>
 
 ---
@@ -45,7 +49,7 @@
 
 | DTL — Version 1 | DTL — Version 2 |
 |-----------------|-----------------|
-| <img src="dtl_v1.png" alt="DTL Version 1" width="350"/> | <img src="dtl_v2.png" alt="DTL Version 2" width="350"/> |
+| <img src="dtl_v1.png" alt="DTL Version 1" width="500"/> | <img src="dtl_v2.png" alt="DTL Version 2" width="500"/> |
 
 </div>
 
@@ -53,6 +57,6 @@
 
 ### Overlay for DTL - Version 1
 <div align="center">
-  <img src="dtl_overlay_v1.png" alt="DTL Overlay on Original Map" width="500"/>
+  <img src="dtl_overlay_v1.png" alt="DTL Overlay on Original Map" width="750"/>
 </div>
 
