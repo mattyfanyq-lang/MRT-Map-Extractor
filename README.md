@@ -59,8 +59,8 @@ Higher Hough thresholds and longer minimum line length used, so shorter fragment
 
 ---
 
-### Overlay for DTL - Version 1
+### DTL + EWL Combined Line Visualisation — Version 2
 <div align="center">
-  <img src="dtl_overlay_v1.png" alt="DTL Overlay on Original Map" width="750"/>
+  <img src="combined_dtl_ewl.png" alt="Visualisation for EWL and DTLp" width="750"/>
 </div>
 
