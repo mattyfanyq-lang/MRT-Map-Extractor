@@ -2,8 +2,8 @@ import json
 import cv2
 import numpy as np
 
-JSON_FILE = "downtown_line.json"
-OUTPUT_IMAGE = "downtown_line_only.png"
+JSON_FILE = "ewl_v2.json"
+OUTPUT_IMAGE = "ewl_v2.png"
 
 def main():
     with open(JSON_FILE, "r") as f:
@@ -23,7 +23,7 @@ def main():
     for seg in segments:
         x1, y1 = seg["x1"], seg["y1"]
         x2, y2 = seg["x2"], seg["y2"]
-        cv2.line(img, (x1, y1), (x2, y2), (255, 0, 0), 3, cv2.LINE_AA)
+        cv2.line(img, (x1, y1), (x2, y2), (0, 175, 0), 3, cv2.LINE_AA)
 
     cv2.imwrite(OUTPUT_IMAGE, img)
     print(f"Saved DTL-only image to {OUTPUT_IMAGE}")

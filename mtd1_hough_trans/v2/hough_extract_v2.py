@@ -19,10 +19,10 @@ def main(argv):
 
     hsv = cv.cvtColor(src, cv.COLOR_BGR2HSV)
 
-    lower_blue = np.array([95, 80, 60])
-    upper_blue = np.array([130, 255, 255])
+    lower_green = np.array([50, 120, 120])
+    upper_green = np.array([80, 255, 255])
 
-    mask = cv.inRange(hsv, lower_blue, upper_blue)
+    mask = cv.inRange(hsv, lower_green, upper_green)
     edges = cv.Canny(mask, 50, 200, None, 3)
 
     result = np.copy(src)
@@ -53,12 +53,12 @@ def main(argv):
                 "y2": int(y2)
             })
 
-    with open("downtown_line.json", "w") as f:
+    with open("ewl_v2.json", "w") as f:
         json.dump(extracted, f, indent=4)
 
     print("Saved extracted segments and image size to downtown_line.json")
 
-    cv.imshow("Extracted Downtown Line", result)
+    cv.imshow("Extracted Line", result)
     cv.waitKey()
     return 0
 
