@@ -3,7 +3,6 @@ import cv2 as cv
 import numpy as np
 import json
 
-
 def main(argv):
 
     default_file = "mrt_clean.png"
@@ -17,15 +16,26 @@ def main(argv):
 
     height, width = src.shape[:2]
 
+    # Convert to HSV and mask for green
     hsv = cv.cvtColor(src, cv.COLOR_BGR2HSV)
-
     lower_green = np.array([50, 120, 120])
     upper_green = np.array([80, 255, 255])
-
     mask = cv.inRange(hsv, lower_green, upper_green)
+
+    # Edge detection result
     edges = cv.Canny(mask, 50, 200, None, 3)
 
-    result = np.copy(src)
+    # --- NEW: Create a black canvas and draw edges in white ---
+    edge_visual = np.zeros((height, width, 3), dtype=np.uint8)
+    edge_visual[edges > 0] = (255, 255, 255)    # white edges on black
+
+    # Save edge visualisation
+    cv.imwrite("ewl_edges.png", edge_visual)
+    print("Saved edge visualisation as ewl_edges.png")
+
+    # ------------------------------
+    # Hough transform + JSON export
+    # ------------------------------
 
     linesP = cv.HoughLinesP(
         edges,
@@ -35,6 +45,7 @@ def main(argv):
         minLineLength=60,
         maxLineGap=15
     )
+
     extracted = {
         "line_name": "Downtown Line",
         "image_width": width,
@@ -45,7 +56,6 @@ def main(argv):
     if linesP is not None:
         for seg in linesP:
             x1, y1, x2, y2 = seg[0]
-            cv.line(result, (x1, y1), (x2, y2), (255, 0, 0), 3, cv.LINE_AA)
             extracted["segments"].append({
                 "x1": int(x1),
                 "y1": int(y1),
@@ -56,12 +66,9 @@ def main(argv):
     with open("ewl_v2.json", "w") as f:
         json.dump(extracted, f, indent=4)
 
-    print("Saved extracted segments and image size to downtown_line.json")
+    print("Saved segments to ewl_v2.json")
 
-    cv.imshow("Extracted Line", result)
-    cv.waitKey()
     return 0
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])
