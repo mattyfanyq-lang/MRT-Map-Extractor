@@ -67,3 +67,7 @@ Higher Hough thresholds and longer minimum line length used, so shorter fragment
 </div>
 
 ---
+
+### Current Limitations & Challenges
+
+The current extraction process can identify and trace the full shape of an MRT line based on colour masking and Hough-based detection, yet the output treats the entire line as a single continuous entity. For the project to be functional, this line must be divided into meaningful segments, each carrying its own identifier that corresponds to the schematic. Achieving this segmentation automatically is challenging because the raw detection does not inherently recognise station boundaries, line breaks, or schematic-defined sections. As a result, reliably splitting the detected line into correctly indexed segments remains a key technical obstacle.
